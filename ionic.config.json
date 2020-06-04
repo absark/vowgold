@@ -1,0 +1,7 @@
+{
+  "name": "vowGold",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "angular"
+}

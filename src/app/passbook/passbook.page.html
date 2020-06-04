@@ -1,0 +1,33 @@
+<ion-header>
+  <ion-toolbar>
+     <ion-buttons slot="start">
+       <ion-back-button defaultHref="/home"></ion-back-button>
+     </ion-buttons>
+    <ion-title>Passbook</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+ <ion-item>
+  <ion-icon name="card-outline" slot="start"></ion-icon>
+  <ion-title>Payment History</ion-title>
+ </ion-item>
+<div class="card my-2 mx-1 p-2 "*ngFor="let d of paymentHistory.payments">
+   <div class="h6 border-bottom pb-2"> 
+    <ion-icon name="arrow-redo-sharp" class="text-primary mr-2" slot="icon-only"></ion-icon>Paid To Vow Golds</div>
+  <div class="d-flex">
+    <div class="grow">Date Paid:</div>
+    <div class="grow text-right">{{d.date | date }}</div>
+  </div>
+  <div class="d-flex my-2">
+    <div class="grow">Amount Paid:</div>
+    <div class="grow text-right"> Rs.{{d.amount}}</div>
+  </div>
+  <div class="d-flex">
+    <div class="grow">Receipt Email:</div>
+    <div class="grow text-right">{{d.email}}</div>
+  </div>
+  
+  
+</div>
+</ion-content>

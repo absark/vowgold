@@ -1,0 +1,26 @@
+
+ion-slides{  --bullet-background-active:var(--ion-color-danger-contrast);}
+
+.title{
+    position: absolute;
+    top: 5px;
+    color:var(--ion-color-primary-contrast);
+}
+.price{
+    position: absolute;
+   bottom: 20px;
+
+}
+
+ ion-img{
+     height: 160px;
+ }
+ 
+ ion-slide{background:var(--ion-color-medium) !important }
+ .tab{
+     position: fixed;
+     right: 0px;
+     left: 0px;
+     bottom: 0px;
+     z-index: 200;
+ }
