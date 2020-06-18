@@ -6,53 +6,55 @@ import { Storage } from '@ionic/storage';
 import { environment } from '../../environments/environment';
 import { tap, catchError } from 'rxjs/operators';
 import { BehaviorSubject } from 'rxjs';
-import { StripeService } from './stripe.service';
-import { User } from '../models/user';
- 
+import { StripeService } from '../main/services/stripe.service';
+import { Router } from '@angular/router';
+import { FileTransfer, FileUploadOptions, FileTransferObject } from '@ionic-native/file-transfer/ngx';
+
+
 const TOKEN_KEY = 'access_token';
+const USER_ROLE = 'access_role';
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
+ 
 })
 export class AuthService {
-  token:string;
+
   url = environment.url;
   user = null;
-  userInfo = null;
-  isChange = null;
-  Token;
+  token;
+  userRole;
   authenticationState = new BehaviorSubject(false);
  
   constructor(
+    private transfer: FileTransfer,
     private http: HttpClient,
     private helper: JwtHelperService,
     private storage: Storage,
-    private plt: Platform,
     private alertController: AlertController, 
     private loading:LoadingController,
-    private stripe:StripeService
+    private stripe:StripeService,
+    private router:Router
     ) {
-       this.storage.get(TOKEN_KEY).then(t=>{
-       this.Token= t;
-      })
-      console.log("STArt",this.Token);
-    this.plt.ready().then(() => {
-      this.checkToken();
-
-    });
-
+  this.storage.get(USER_ROLE).then(user =>{
+    this.userRole = user.role;
+  });
+     console.log("called");
+  this.checkToken();
+  }
+  getToken(){
+    return this.token;
   }
  
   checkToken() {
     this.storage.get(TOKEN_KEY).then(token => {
-      this.token = token;
+      
       if (token) {
-     
+       this.token = token;
         let decoded = this.helper.decodeToken(token);
         let isExpired = this.helper.isTokenExpired(token);
         if (!isExpired) {
           this.user = decoded;
           this.authenticationState.next(true);
-         
         } else {
           this.storage.remove(TOKEN_KEY);
         }
@@ -62,26 +64,47 @@ export class AuthService {
  
 
 
-  register(credentials) {
-    this.loading.create({message:'SignUp...'}).then(el =>{
-      el.present();
-    });
-    return this.http.post(`${this.url}/api/v1/users/signup`, credentials).pipe(
-      tap(res => {
-       
-        this.loading.dismiss();
-        this.storage.set(TOKEN_KEY, res['token']);
-        this.user = this.helper.decodeToken(res['token']);
-       
-        this.authenticationState.next(true);
+  register(
+    name:string,
+    email:string,
+    password:string,
+    passwordConfirm:string,
+    mobile:string,
+    image:any
+  ) {
+    
+    // this.loading.create({message:'SignUp...'}).then(el =>{
+    //   el.present();
+    // });
+  
+   const userData = new FormData();
+   
+   
+    userData.append("name",name);
+    userData.append("email",email);
+    userData.append("password",password);
+    userData.append("passwordConfirm", passwordConfirm);
+    userData.append("mobile",mobile);
+    userData.append("image",image,image.name);
+   
+    return this.http.post<any>(`${this.url}/api/v1/users/signup`, userData);
+    // .subscribe(res => {
+    //    console.log("REsut",res);
+    //     // this.loading.dismiss();
+    //     // this.token = res.token;
+    //     // this.userRole = res.user.role;
+    //     // this.storage.set(TOKEN_KEY, res.token);
+    //     // this.storage.set(USER_ROLE, res.user);
+    //     // this.user = this.helper.decodeToken(res['token']);
+    //     // this.authenticationState.next(true);
         
-      }),
-      catchError(e => {
-        this.loading.dismiss();
-        this.showAlert(e.message);
-        throw new Error(e);
-      })
-    );
+    //   },
+    //   err => {
+    //     this.loading.dismiss();
+    //     this.showAlert(err.message);
+    //     throw new Error(JSON.stringify(err));
+    //   }
+    // );
   }
  
   login(credentials) {
@@ -90,30 +113,48 @@ export class AuthService {
        el.present();
      });
 
-    return this.http.post(`${this.url}/api/v1/users/login`, credentials,{responseType:'json'})
-      .pipe(
-        tap(res => {
+    return this.http.post<{status:string,token:string,user:any}>(`${this.url}/api/v1/users/login`, credentials,{responseType:'json'})
+      .subscribe(res => {
+        this.token = res.token;
+        this.userRole = res.user.role;
+        this.checkToken();
          console.log("LOGIN",res);
           this.loading.dismiss();
           this.storage.set(TOKEN_KEY, res['token']);
+          this.storage.set(USER_ROLE, res.user);
           this.user = this.helper.decodeToken(res['token']);
           this.authenticationState.next(true);
+      },
           
-        }),
-        catchError(e => {
-          const error = JSON.stringify(e);
+        err => {
+          
           this.loading.dismiss();
-          if(e.status===404){
+          if(err.status===404){
             this.showAlert('Invalid email and password !');
           }
-          throw new Error(error);
-        })
-      );
-  }
+          throw new Error(JSON.stringify(err));
+        }
+      )
+  };
  
-  logout() {
-    this.storage.remove(TOKEN_KEY).then(() => {
+   forgotPassword(email){
+    console.log("tOken",email);
+    return this.http.post(`${this.url}/api/v1/users/forgotpassword`, email);
+   }
+   resetPassword(token, data){
+
+    console.log("tOken",token);
+    console.log("New password",data);
+    return this.http.patch(`${this.url}/api/v1/users/resetpassword/${token}`, data);
+   }
+
+
+
+ async logout() {
+   this.token = null;
+    await this.storage.remove(TOKEN_KEY).then(() => {
       this.authenticationState.next(false);
+      this.router.navigate(['/','auth','signin']);
     });
    
   }
@@ -133,15 +174,6 @@ export class AuthService {
     alert.then(alert => alert.present());
   }
 
-  udateUser(body){
-    return this.http.patch(`${this.url}/api/v1/users/${this.user.id}`,body);
-  }
 
-  getUser(){
-   return this.http.get(`${this.url}/api/v1/users/${this.user.id}`);
-}
 
-updatePassword(body){
-  return this.http.patch(`${this.url}/api/v1/users/updatepassword`,body);
-}
 }

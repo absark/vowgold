@@ -11,8 +11,8 @@ import { AppRoutingModule } from './app-routing.module';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import {Storage , IonicStorageModule } from '@ionic/storage';
 import { JwtModule , JWT_OPTIONS} from "@auth0/angular-jwt";
-import { ConfigInterceptor } from './services/auth-interceptor';
-
+import { ConfigInterceptor } from './main/services/auth-interceptor';
+import { FileTransfer } from '@ionic-native/file-transfer/ngx';
 export function jwtOptionsFactoty(storage){
   return {
     tokenGetter:()=>{
@@ -32,22 +32,25 @@ export function jwtOptionsFactoty(storage){
     IonicModule.forRoot(),
     AppRoutingModule,
     JwtModule.forRoot({
-      jwtOptionsProvider:{
-        provide: JWT_OPTIONS,
+    jwtOptionsProvider:{
+      provide: JWT_OPTIONS,
       useFactory: jwtOptionsFactoty,
       deps:[Storage]
       }
     })
+    
   ],
-  providers: [
+  providers: [   
+    
+    StatusBar,
+    SplashScreen,
+    { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
     {
       provide: HTTP_INTERCEPTORS,
       useClass: ConfigInterceptor,
       multi: true
     },
-    StatusBar,
-    SplashScreen,
-    { provide: RouteReuseStrategy, useClass: IonicRouteStrategy }
+    FileTransfer
     
   ],
   bootstrap: [AppComponent]

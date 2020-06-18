@@ -17,8 +17,16 @@ const routes: Routes = [
         loadChildren: () => import('./signin/signin.module').then( m => m.SigninPageModule)
       },
       {
+        path: 'forgotpassword',
+        loadChildren: () => import('./forgotpassword/forgotpassword.module').then( m => m.ForgotpasswordPageModule)
+      },
+      {
+        path: 'resetpassword',
+        loadChildren: () => import('./resetpassword/resetpassword.module').then( m => m.ResetpasswordPageModule)
+      },
+      {
         path: '',
-        redirectTo: '/auth/signup',
+        redirectTo: '/auth/forgotpassword',
         pathMatch: 'full'
       }
     ]

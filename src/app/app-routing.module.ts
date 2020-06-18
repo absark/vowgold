@@ -5,7 +5,7 @@ import { AuthGuardService} from './services/auth-guard.service';
 const routes: Routes = [
   {
     path: '',
-    redirectTo: 'stripe',
+    redirectTo: 'main',
     pathMatch: 'full'
   },
   {
@@ -13,30 +13,9 @@ const routes: Routes = [
     loadChildren: () => import('./auth/auth.module').then( m => m.AuthPageModule)
   },
   {
-    path: 'home',
-    loadChildren: () => import('./home/home.module').then( m => m.HomePageModule),
-    canActivate: [AuthGuardService]
-  },
-  {
-    path: 'monthlyscheme',
-    loadChildren: () => import('./monthlyscheme/monthlyscheme.module').then( m => m.MonthlyschemePageModule)
-  },
- 
-  {
-    path: 'stripe',
-    loadChildren: () => import('./stripe/stripe.module').then( m => m.StripePageModule)
-  },
-  {
-    path: 'passbook',
-    loadChildren: () => import('./passbook/passbook.module').then( m => m.PassbookPageModule)
-  },
-  {
-    path: 'myaccount',
-    loadChildren: () => import('./myaccount/myaccount.module').then( m => m.MyaccountPageModule)
-  },
-  {
-    path: 'forgotpassword',
-    loadChildren: () => import('./forgotpassword/forgotpassword.module').then( m => m.ForgotpasswordPageModule)
+    path: 'main',
+    loadChildren: () => import('./main/main.module').then( m => m.MainPageModule),
+   canActivate:[AuthGuardService]
   }
 
 ];

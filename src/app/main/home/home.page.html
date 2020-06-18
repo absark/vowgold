@@ -1,0 +1,65 @@
+<ion-header >
+  <ion-toolbar >
+    <ion-menu-button slot="start" ></ion-menu-button>
+
+    <ion-title *ngIf="userRole !== 'admin'">Home</ion-title>
+    <ion-title *ngIf="userRole === 'admin'">Admin Dashboard</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content *ngIf="userRole !== 'admin'">
+  
+ <div class="main-content  mb-2" >
+  <div  class="">
+    <img src="../assets/img/invest.jpg" style="width: 100%;height: auto;background-size: cover;">
+  </div>
+
+
+    <ion-slides pager="true" [options]="slideOpts" class="m-1" style="height: 180px; border-radius: 4px;">
+      <ion-slide class="slide-bg">
+        <ion-img src="../assets/img/gold.png" ></ion-img>
+        <span class="title">Gold</span>
+  
+      </ion-slide>
+      <ion-slide class="slide-bg">
+        <ion-img src="../assets/img/silver.png" ></ion-img>
+        <span class="title">Silver</span>
+  
+      </ion-slide>
+      <ion-slide class="slide-bg">
+        <ion-img src="../assets/img/diamond.png" ></ion-img>
+        <span class="title">Diamond</span>
+  
+  
+      </ion-slide>
+    </ion-slides>
+  
+
+
+  <div class="d-flex mx-1 mt-2">
+    <div class="card grow mr-1 py-3 text-center d-flex" routerLink="/main/tabs/passbook">
+     Payment History</div>
+    <div class="card grow ml-1 py-3 px-2 text-center"routerLink="/main/tabs/stripe">Make Payment</div>
+  </div>
+  <div class="card py-5 mt-2 mx-1 text-center"[routerLink]="['/','main','tabs','monthlyscheme']">Check Out Monthly Schemes</div>
+ </div>
+
+
+
+</ion-content>
+
+
+
+<!-- ADMIN PAGE -->
+<ion-content  *ngIf="userRole === 'admin'">
+  <ion-title class="mb-2 mt-3">List Of Users</ion-title>
+<ion-list>
+  <div *ngFor="let user of users">
+    <ion-item  (click)="onUser(user)"*ngIf="user.role !== 'admin'">
+      <ion-icon name="person-circle-outline" slot="start" ></ion-icon>
+      <ion-label >{{user.email}}</ion-label>
+      <ion-icon name="chevron-forward-outline" slot="end" ></ion-icon>
+    </ion-item>
+  </div>
+</ion-list>
+</ion-content>

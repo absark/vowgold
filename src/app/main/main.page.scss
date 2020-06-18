@@ -1,0 +1,11 @@
+
+ion-item.selected {
+    --color: var(--ion-color-primary);
+  }
+  .border{
+    border: 3px solid var(--ion-color-primary) !important;
+  }
+  
+  ion-icon{
+    color: var(--ion-color-primary) !important;
+  }

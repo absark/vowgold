@@ -1,5 +1,6 @@
 
 <ion-content>
+  
   <ion-grid>
     <ion-row>
       <ion-col size-sm="10" offset-sm="1">
@@ -26,7 +27,7 @@
   </form>
  
    <!-- FORM END -->
-   <div class="text-center mt-4 anchor">Forgot Password ?</div>
+   <div class="text-center mt-4 anchor" [routerLink]="['/','auth','forgotpassword']">Forgot Password ?</div>
    <div class="footer">
     <span> Don't have an Account?</span><br>
     <span class="anchor"[routerLink]="['/','auth','signup']">Create New Account</span>

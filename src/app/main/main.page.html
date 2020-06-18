@@ -1,0 +1,75 @@
+
+  <ion-app>
+    <ion-menu contentId="main-content" type="overlay" >
+      <ion-content>
+  
+    
+
+        <ion-menu-toggle>
+          <ion-item routerLink="/main/tabs/myaccount" class="mt-1">
+            <ion-icon name="person-circle-outline" slot="start" ></ion-icon>
+            <ion-label> My Account</ion-label>
+           </ion-item>
+        </ion-menu-toggle >
+        <ion-menu-toggle *ngIf="role !== 'admin'">
+          <ion-item routerLink="/main/tabs/home" class="mt-1">
+            <ion-icon name="home-outline" slot="start" ></ion-icon>
+            <ion-label>Home</ion-label>
+           </ion-item>
+        </ion-menu-toggle>
+
+        <ion-menu-toggle *ngIf="role === 'admin'">
+          <ion-item routerLink="/main/tabs/home">
+            <ion-icon name="tv-outline" slot="start" ></ion-icon>
+            <ion-label> Admin Dashboard</ion-label>
+           </ion-item>
+        </ion-menu-toggle>
+  
+        <ion-menu-toggle>
+          <ion-item routerLink="/main/tabs/setting">
+            <ion-icon name="settings-outline" slot="start"></ion-icon>
+            <ion-label>Setting</ion-label>
+            </ion-item>
+        </ion-menu-toggle>
+  
+        <ion-menu-toggle>
+          <ion-item (click)="onSignout()">
+            <ion-icon name="power-outline" slot="start"></ion-icon>
+           <ion-label>Sign Out</ion-label>
+          </ion-item>
+        </ion-menu-toggle>
+      </ion-content>
+     
+    </ion-menu>
+    <ion-router-outlet id="main-content"></ion-router-outlet>
+
+
+    <!-- Tabs -->
+    <!-- <ion-tabs *ngIf="isPaid !== 0">
+      <ion-tab-bar slot="bottom">
+
+        <ion-tab-button tab="home" *ngIf="role !== 'admin'">
+          <ion-icon name="home-outline"></ion-icon>
+          <ion-label>Home</ion-label>
+        </ion-tab-button>
+
+        <ion-tab-button tab="home" *ngIf="role === 'admin'">
+          <ion-icon name="home-outline"></ion-icon>
+          <ion-label>Admin Dashboard</ion-label>
+        </ion-tab-button>
+    
+        <ion-tab-button tab="setting">
+          <ion-icon name="settings-outline"></ion-icon>
+          <ion-label>Setting</ion-label>
+        </ion-tab-button>
+    
+        <ion-tab-button tab="myaccount">
+          <ion-icon name="person-circle-outline"></ion-icon>
+          <ion-label>MyAccount</ion-label>
+        </ion-tab-button>
+    
+      </ion-tab-bar>
+    </ion-tabs> -->
+  </ion-app>
+
+

@@ -15,10 +15,6 @@ export class SigninPage implements OnInit {
   }
   onSubmit(form:NgForm){
   
-    this.auth.login(form.value).subscribe(res => {
-      const result = res as any;
-      this.auth.userInfo = result.user;
-      console.log("respononse",result.user);
-    })
+    this.auth.login(form.value);
   }
 }

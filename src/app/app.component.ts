@@ -5,7 +5,7 @@ import { SplashScreen } from '@ionic-native/splash-screen/ngx';
 import { StatusBar } from '@ionic-native/status-bar/ngx';
 import { AuthService } from './services/auth.service';
 import { Router } from '@angular/router';
-import { StripeService } from './services/stripe.service';
+import { StripeService } from './main/services/stripe.service';
 import { User } from './models/user';
 
 @Component({
@@ -14,7 +14,7 @@ import { User } from './models/user';
   styleUrls: ['app.component.scss']
 })
 export class AppComponent implements OnInit {
-  userInfo:User;
+  
   constructor(
     private platform: Platform,
     private splashScreen: SplashScreen,
@@ -24,7 +24,7 @@ export class AppComponent implements OnInit {
     private stripe: StripeService
   ) {
     this.initializeApp();
-    
+ 
   }
 
   initializeApp() {
@@ -32,35 +32,15 @@ export class AppComponent implements OnInit {
       this.statusBar.styleDefault();
       this.splashScreen.hide();
       this.auth.authenticationState.subscribe(state => {
+        console.log("state",state);
         if(state){
-        
-         if(this.auth.user.id){
-           // get user details
-          // setTimeout(()=>{
-          //   this.auth.getUser().subscribe(res =>{
-          //     const result = res as any ;
-          //     this.userInfo = result.user;
-          //     console.log("USERINFO",this.userInfo);
-          //   },
-          //   err =>{
-          //     this.auth.showAlert(err.message);
-          //   });
-          // },1000);
-
-         // Has user  made any payment ? 'home' : 'stripe'
-           this.stripe.paymentDetails(this.auth.user.id).subscribe(e =>{
-            const result = e as any;
-            this.auth.userInfo = result.payments;
-            if(result.payments.length !== 0){
-              this.router.navigate(['/','home']);
-             }else{
-              this.router.navigate(['/','stripe']);
-             }
-          },
-          err =>{
-            this.auth.showAlert(err.message);
-          });
-         }
+          this.stripe.paymentDetails(this.auth.user.id).subscribe(res =>{
+            if(res.payments.length!== 0 || this.auth.userRole === 'admin'){
+              this.router.navigate(['/','main']);  
+            }else{
+              this.router.navigate(['/','main','tabs','stripe']);  
+            }
+          })
           
         }else{
           this.router.navigate(['/','auth','signup']);
@@ -69,11 +49,10 @@ export class AppComponent implements OnInit {
     });
   }
  
+ 
   ngOnInit() {}
  
-  onSignout(){
-     this.auth.logout();
 
-  }
   
+ 
 }
