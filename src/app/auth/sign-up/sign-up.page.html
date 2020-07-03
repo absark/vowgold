@@ -1,6 +1,6 @@
 
 <ion-content class="content">
-  <ion-grid>
+  <ion-grid class="gradient" >
     <ion-row >
       <ion-col size-sm="10" offset-sm="1">
         
@@ -136,37 +136,34 @@
       </div>
 
 
-      <ion-item lines="none">
+      <ion-item lines="none" class="mb-2 file">
         <ion-label slot="start" class="ion-text-wrap text">Select PAN Card</ion-label >
           <input
           style="display: none"[writeFile]="true"
           type="file" (change)="onFileChanged($event)"
           #fileInput>
           <div slot="end">
-            <ion-icon name="image-outline" (click)="fileInput.click()"[ngClass]="{'icon-color':pancard!==''}"></ion-icon>
+            <ion-icon name="image-outline" (click)="fileInput.click()"[ngClass]="{'icon-color':pancard!==null}"></ion-icon>
           </div>
   
         </ion-item>
 
 
-      <ion-item lines="none" class="mb-3">
+      <ion-item lines="none" class="mb-3 file">
         <ion-label slot="start" class="text">Select Adhaar Card</ion-label >
         <input
         style="display: none"[writeFile]="true"
         type="file" (change)="onAdhaar($event)"
         #file1Input>
         <div slot="end">
-          <ion-icon name="image-outline" (click)="file1Input.click()" [ngClass]="{'icon-color':adhaarcard !==''}"></ion-icon>
+          <ion-icon name="image-outline" (click)="file1Input.click()" [ngClass]="{'icon-color':adhaarcard !==null}"></ion-icon>
         </div>
 
         </ion-item>
   
 
-      <p class="mt-1 terms">By tapping to "Sign Up " you agree to the <br>
-        <span class=" anchor">Terms & Condition</span>
-      </p>
       <!-- SIGNUP BUTTON -->
-      <ion-button type="submit">Create New Account</ion-button>
+      <button type="submit" class="btn btn-block btn-primary">Create New Account</button>
   
     </div>
 
@@ -174,10 +171,15 @@
    <!-- FORM END-->
  
 
-<img [src]="result" alt="img" style=" height:150px" *ngIf="result">
-   <div class="text-center">OR</div>
+  
    <!-- SIGNIN BUTTON -->
-   <ion-button expand="block" [routerLink]="['/','auth','signin']" class="ion-padding-horizontal">SIGN IN</ion-button>
+   <div class="d-flex text-white mb-4 mt-5"
+    style="justify-content: center; outline: none;"
+    [routerLink]="['/','auth','signin']">
+    <span expand="block"  class="ion-padding-horizontal">Sign In</span>
+    <ion-icon name="arrow-forward-outline" class="pt-1 icon-only"></ion-icon>
+  </div>
+  
       </ion-col>
     </ion-row>
   </ion-grid>

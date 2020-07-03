@@ -4,11 +4,9 @@ import { HttpClient } from '@angular/common/http';
 import { JwtHelperService } from '@auth0/angular-jwt';
 import { Storage } from '@ionic/storage';
 import { environment } from '../../environments/environment';
-import { tap, catchError } from 'rxjs/operators';
 import { BehaviorSubject } from 'rxjs';
 import { StripeService } from '../main/services/stripe.service';
 import { Router } from '@angular/router';
-import { FileTransfer, FileUploadOptions, FileTransferObject } from '@ionic-native/file-transfer/ngx';
 
 
 const TOKEN_KEY = 'access_token';
@@ -26,7 +24,6 @@ export class AuthService {
   authenticationState = new BehaviorSubject(false);
  
   constructor(
-    private transfer: FileTransfer,
     private http: HttpClient,
     private helper: JwtHelperService,
     private storage: Storage,
@@ -38,7 +35,6 @@ export class AuthService {
   this.storage.get(USER_ROLE).then(user =>{
     this.userRole = user.role;
   });
-     console.log("called");
   this.checkToken();
   }
   getToken(){
@@ -62,50 +58,6 @@ export class AuthService {
     });
   }
  
-
-
-  register(
-    name:string,
-    email:string,
-    password:string,
-    passwordConfirm:string,
-    mobile:string,
-    image:any
-  ) {
-    
-    // this.loading.create({message:'SignUp...'}).then(el =>{
-    //   el.present();
-    // });
-  
-   const userData = new FormData();
-   
-   
-    userData.append("name",name);
-    userData.append("email",email);
-    userData.append("password",password);
-    userData.append("passwordConfirm", passwordConfirm);
-    userData.append("mobile",mobile);
-    userData.append("image",image,image.name);
-   
-    return this.http.post<any>(`${this.url}/api/v1/users/signup`, userData);
-    // .subscribe(res => {
-    //    console.log("REsut",res);
-    //     // this.loading.dismiss();
-    //     // this.token = res.token;
-    //     // this.userRole = res.user.role;
-    //     // this.storage.set(TOKEN_KEY, res.token);
-    //     // this.storage.set(USER_ROLE, res.user);
-    //     // this.user = this.helper.decodeToken(res['token']);
-    //     // this.authenticationState.next(true);
-        
-    //   },
-    //   err => {
-    //     this.loading.dismiss();
-    //     this.showAlert(err.message);
-    //     throw new Error(JSON.stringify(err));
-    //   }
-    // );
-  }
  
   login(credentials) {
 
@@ -114,37 +66,32 @@ export class AuthService {
      });
 
     return this.http.post<{status:string,token:string,user:any}>(`${this.url}/api/v1/users/login`, credentials,{responseType:'json'})
-      .subscribe(res => {
+      .subscribe(
+        res => {
         this.token = res.token;
         this.userRole = res.user.role;
         this.checkToken();
-         console.log("LOGIN",res);
-          this.loading.dismiss();
-          this.storage.set(TOKEN_KEY, res['token']);
-          this.storage.set(USER_ROLE, res.user);
-          this.user = this.helper.decodeToken(res['token']);
-          this.authenticationState.next(true);
+        this.loading.dismiss();
+        this.storage.set(TOKEN_KEY, res['token']);
+        this.storage.set(USER_ROLE, res.user);
+        this.user = this.helper.decodeToken(res['token']);
+        this.authenticationState.next(true);
       },
           
-        err => {
-          
-          this.loading.dismiss();
-          if(err.status===404){
-            this.showAlert('Invalid email and password !');
-          }
-          throw new Error(JSON.stringify(err));
+      err => {  
+        this.loading.dismiss();
+        if(err.status===404){
+        this.showAlert('Invalid email and password !');
+        }
+        throw new Error(JSON.stringify(err));
         }
       )
   };
  
    forgotPassword(email){
-    console.log("tOken",email);
     return this.http.post(`${this.url}/api/v1/users/forgotpassword`, email);
    }
    resetPassword(token, data){
-
-    console.log("tOken",token);
-    console.log("New password",data);
     return this.http.patch(`${this.url}/api/v1/users/resetpassword/${token}`, data);
    }
 
@@ -174,6 +121,7 @@ export class AuthService {
     alert.then(alert => alert.present());
   }
 
+  
 
 
 }

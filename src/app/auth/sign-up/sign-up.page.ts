@@ -18,10 +18,9 @@ const USER_ROLE = 'access_role';
 export class SignUpPage implements OnInit {
    registerForm:FormGroup;
    submitted = false;
-   imagePreview:any;
-  selectedFile: any;
-   pancard:any = '';
-   adhaarcard:any = '';
+   selectedFile: any;
+   pancard:any = null;
+   adhaarcard:any = null;
   
   constructor(
     private formBuilder: FormBuilder,
@@ -54,9 +53,9 @@ export class SignUpPage implements OnInit {
 
   onSubmit(form:FormGroup){
     this.submitted = true;
-    // this.loading.create({message:'SignUp...'}).then(el =>{
-    //     el.present();
-    //   });
+    this.loading.create({message:'SignUp...'}).then(el =>{
+        el.present();
+      });
     const userData = new FormData();
     userData.append("name",this.registerForm.value.name);
     userData.append("email",this.registerForm.value.email);
@@ -69,29 +68,24 @@ export class SignUpPage implements OnInit {
 
     // stop here if form is invalid
     if (this.registerForm.invalid) {
-    //  this.loading.dismiss();
+      this.loading.dismiss();
         return;
     }
-
-    console.log("submit", JSON.stringify(this.registerForm.value))
  
       this.http.post<any>(`${this.auth.url}/api/v1/users/signup`, userData).subscribe(res =>{
-        console.log(res);
-  //      this.loading.dismiss();
+        this.loading.dismiss();
         this.auth.token = res.token;
         this.auth.userRole = res.user.role;
         this.storage.set(TOKEN_KEY, res.token);
         this.storage.set(USER_ROLE, res.user);
         this.auth.user = this.helper.decodeToken(res['token']);
         this.auth.authenticationState.next(true);
-        this.adhaarcard = '';
-        this.pancard = '';
+        this.adhaarcard = null;
+        this.pancard = null;
         this.registerForm.reset();
       },err=>{
-       // this.loading.dismiss();
-       this.registerForm.reset();
-        this.auth.showAlert(err.message);
-
+        this.loading.dismiss();
+        this.auth.showAlert(err.error.message);
         throw new Error(JSON.stringify(err));
         
       });
@@ -103,11 +97,7 @@ onFileChanged(event:Event){
   this.pancard = file;
   this.registerForm.patchValue({panCard:file});
   this.registerForm.get('panCard').updateValueAndValidity();
-  const reader = new FileReader();
-  reader.onload = ()=>{
-    this.imagePreview = reader.result;
-  };
-  reader.readAsDataURL(file);
+
 }
 
 onAdhaar(event:Event){

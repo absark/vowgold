@@ -3,6 +3,8 @@ import { AuthService } from 'src/app/services/auth.service';
 import { SharedService } from '../services/shared.service';
 import { ModalController } from '@ionic/angular';
 import { UserComponent } from './user/user.component';
+import { environment } from 'src/environments/environment';
+import { HttpClient } from '@angular/common/http';
 
 @Component({
   selector: 'app-home',
@@ -10,21 +12,32 @@ import { UserComponent } from './user/user.component';
   styleUrls: ['./home.page.scss'],
 })
 export class HomePage implements OnInit {
+   url = environment.url;
    userRole;
    users;
+   rates;
   constructor(
     private auth: AuthService,
     private service: SharedService,
-    private modal: ModalController
+    private modal: ModalController,
+    private http : HttpClient
   ) { 
     this.userRole = this.auth.userRole;
     this.service.getUsers().subscribe(res => {
       this.users = res.users;
-     })
+     },
+     err=>{
+       this.auth.showAlert(err.error.message);
+     });
   }
 
   ngOnInit() {
-
+    this.http.get<any>(`${this.url}/api/v1/users/rates`).subscribe(res=>{
+      this.rates = res.rates;
+   },
+   err=>{
+     this.auth.showAlert(err.error.message);
+   });
   }
   slideOpts = {
     initialSlide: 0,
@@ -34,13 +47,26 @@ export class HomePage implements OnInit {
  
 
   onUser(user){
-     this.modal.create({
-       component:UserComponent,
-       componentProps:{
-         user:user
-       }
-     }).then( modal => {
-       modal.present();
-     });
-  }
+    this.modal.create({
+      component:UserComponent,
+      componentProps:{
+        user:user
+      }
+    }).then( modal => {
+      modal.present();
+     
+    });
+ }
+   
+ doRefresh(event){
+  this.http.get<any>(`${this.url}/api/v1/users/rates`).subscribe(res=>{
+    this.rates = res.rates;
+    event.target.complete();
+ },
+ err=>{
+   this.auth.showAlert(err.error.message);
+ });
+ 
+
+ }
 }

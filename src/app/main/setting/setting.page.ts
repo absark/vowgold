@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { AuthService } from '../../services/auth.service';
-import { ModalController } from '@ionic/angular';
+import { ModalController, LoadingController } from '@ionic/angular';
 import { UpdateUserComponent } from './update-user/update-user.component';
 import { UpdatePasswordComponent } from './update-password/update-password.component';
 import { SharedService } from '../services/shared.service';
@@ -12,23 +12,32 @@ import { SharedService } from '../services/shared.service';
 })
 export class SettingPage implements OnInit {
     user:any = null;
+    userRole;
   constructor(
         private auth:AuthService,
         private service: SharedService,
-        private modalCtrl: ModalController
+        private modalCtrl: ModalController,
+        private loading:LoadingController
         )
-         { }
+         { 
+          this.userRole = this.auth.userRole;
+         }
 
   ngOnInit() {
   }
 
   ionViewWillEnter(){
+    this.loading.create({
+      message:'Loading...'
+    }).then(el=>{el.present()})
     if(this.auth.user){
       this.service.getUser().subscribe(res => {
         this.user = res.user;
+        this.loading.dismiss();
       },
       err=>{
-        this.auth.showAlert(err.message);
+        this.auth.showAlert(err.error.message);
+        this.loading.dismiss();
       }
       )
      }
@@ -42,8 +51,8 @@ export class SettingPage implements OnInit {
         email:this.user.email,
         mobile:this.user.mobile,
         address:this.user.address,
-        panCard:this.user.panCard,
-        adhaar:this.user.adhaar
+        pancard:this.user.panCard,
+        adhaarcard:this.user.adhaar
       }
     }).then( modal =>{
       modal.present();

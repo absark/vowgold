@@ -53,7 +53,7 @@ export class UpdatePasswordComponent implements OnInit {
        
     },
     err=>{
-      this.auth.showAlert(err.message);
+      this.auth.showAlert(err.error.message);
     });
     
 }

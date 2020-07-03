@@ -31,9 +31,17 @@ export class StripePage implements OnInit {
       }
 
       ionViewWillEnter(){
+        this.loading.create({
+          message:'Loading...'
+        }).then(el=>{el.present()});
        if(this.service.user){
         this.service.getUser().subscribe(res => {
+          this.loading.dismiss();
           this.email = res.user.email;
+        },
+        err=>{
+          this.loading.dismiss();
+          this.auth.showAlert(err.error.message);
         })
        }
       }
@@ -69,7 +77,9 @@ export class StripePage implements OnInit {
   
   ngOnInit(){}
 
-
+  ionViewDidLeave(){
+    this.isSuccessfllPayment =false;
+  }
 
   async handleForm(form:NgForm) {
      // loading start
@@ -103,14 +113,11 @@ if( this.amount!== 1000 && this.amount<1000){
     if (error) {
        isloading.dismiss();
       // Inform the customer that there was an error.
-      console.log("ERROR",error);
       this.cardErrors = 'Somthing went wrong!';
-      console.error(error);
     } 
     else {
 
       // Send the token to your server.
-      console.log('sending token',source);
       this.stripeService.payment(source).subscribe(e=>{
            const client_secret= e.paymentObj.client_secret;
        // CONFIRM THE PAYMENT
@@ -132,7 +139,6 @@ if( this.amount!== 1000 && this.amount<1000){
                 email:source.owner.email,
                 amount:source.amount/100
               }).subscribe(e => {
-                console.log(e);
               },
               error=>{
                 isloading.dismiss();

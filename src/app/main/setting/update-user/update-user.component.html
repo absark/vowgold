@@ -17,9 +17,9 @@
 </ion-header>
 
 <ion-content>
-  <ion-grid>
+  <ion-grid style="height:100%" class="gradient">
     <ion-row>
-      <ion-col size-sm="8" offset-sm="2">
+      <ion-col size-sm="8" offset-sm="2" class="mt-5">
         <form  class="ion-padding-horizontal" [formGroup]="updateUser" (ngSubmit)="onSubmit(updateUser)">
           <div class="d-flex column">
       
@@ -99,9 +99,17 @@
             </div>
             </div>
       
-            
+            <div style="border-radius: 5px; background: white;" class="mb-2">
+              <span for="files" class="btn" (click)="pancard.click()" [ngClass]="{'icon-color': panCard_selected}">Select Pancard</span>
+              <input #pancard style="display: none;" type="file" (change)="getPancard($event)">
+          </div>
+
+          <div style="border-radius: 5px; background: white;">
+            <span for="files" class="btn" (click)="adhaarcard.click()"[ngClass]="{'icon-color': adhaarCard_selected}">Select Adhaarcard</span>
+            <input #adhaarcard style="display: none;" type="file" (change)="getAdhaar($event)">
+          </div>
            
-            <ion-button type="submit">Update</ion-button>
+            <ion-button type="submit" class="mt-3">Update</ion-button>
         
           </div>
       

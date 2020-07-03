@@ -6,16 +6,22 @@
 </ion-header>
 
 <ion-content>
-  <ion-item (click)="onupdateUser()">
+ <ion-grid class="gradient" style="height: 100%;">
+   <ion-row>
+     <ion-col size-sm="8" offset-sm="2" class="mt-5">
+      <ion-item (click)="onupdateUser()" style="border-radius: 5px;margin-bottom: 5px;" *ngIf="userRole !== 'admin'">
      
-    <ion-icon name="person-add-sharp" slot="start"></ion-icon>
-    <ion-label *ngIf="user!==null" class="text-primary">Update Profile</ion-label>
-  
-   </ion-item>
-   <ion-item (click)="onPasswordUpdate()">
-
-    <ion-icon name="cloud-upload-sharp" slot="start"></ion-icon>
-    <ion-label *ngIf="user!==null" class="text-primary">Change Password</ion-label>
-  
-   </ion-item>
+        <ion-icon name="person-add-sharp" slot="start"></ion-icon>
+        <ion-label *ngIf="user!==null" class="text-primary">Update Profile</ion-label>
+      
+       </ion-item>
+       <ion-item (click)="onPasswordUpdate()" style="border-radius: 5px;margin-bottom: 5px;">
+    
+        <ion-icon name="cloud-upload-sharp" slot="start"></ion-icon>
+        <ion-label *ngIf="user!==null" class="text-primary">Change Password</ion-label>
+      
+       </ion-item>
+     </ion-col>
+   </ion-row>
+ </ion-grid>
 </ion-content>

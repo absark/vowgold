@@ -32,6 +32,10 @@ const routes: Routes = [
       {
         path: 'stripe',
         loadChildren: () => import('./stripe/stripe.module').then( m => m.StripePageModule)
+      },
+      {
+        path: 'update-rates',
+        loadChildren: () => import('./update-rates/update-rates.module').then( m => m.UpdateRatesPageModule)
       }
     ]
   },

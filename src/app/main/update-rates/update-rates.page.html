@@ -1,0 +1,65 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/main/tabs/home" class="text-white"></ion-back-button>
+    </ion-buttons>
+    <ion-title>updateRates</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-grid class="gradient" style="height: 100%;">
+    <ion-row>
+      <ion-col size-sm="8" offset-sm="2">
+        <div class="mx-3">
+          <!-- <div style="border-radius: 5px;margin-bottom: 5px; " class=" py-1 bg-white mb-2 ">
+            <span class="mr-2">Gold Rate</span>
+            <span>{{gold}}</span>
+          </div>
+          <div style="border-radius: 5px;" class=" py-1 bg-white mb-2">
+            <span class="mr-2">Silver Rate</span>
+            <span>{{silver}}</span>
+          </div> -->
+          <button (click)="onCurrentRates()" class="btn btn-primary btn-block mt-3 mb-5">Get Current Rates</button>
+  
+        </div>
+        
+
+        <form  class="ion-padding-horizontal" [formGroup]="updateRates" (ngSubmit)="onSubmit(updateRates)">
+          <div class="d-flex column">
+      
+            <div class="mb-2">
+              <input type="text" 
+              placeholder="Get gold rate" 
+              disabled
+              class="form-control" 
+              formControlName="gold"
+               >
+            </div>
+            <div class="mb-2">
+              <input type="text" 
+              placeholder="Get silver rate" 
+              class="form-control" 
+              disabled
+              formControlName="silver"
+               >
+            </div>
+      
+            <div class="mb-2">
+              <input type="text" 
+              placeholder="Enter diamond rate" 
+              class="form-control" 
+              formControlName="diamond"
+               >
+            </div>
+             <button class="btn btn-primary btn-block mt-3" type="submit"[disabled]="updateRates.invalid">Update Rates</button>
+            </div>
+            <div class="alert alert-success mt-2 text-center" role="alert" *ngIf="isUpdated">
+              Metal rates updated successfull !
+            </div>
+            </form>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+
+</ion-content>

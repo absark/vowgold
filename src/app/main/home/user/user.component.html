@@ -1,13 +1,13 @@
 <ion-header >
   <ion-toolbar >
-    <ion-title>{{user.name}}</ion-title>
+    <ion-title>User Information</ion-title>
     <ion-buttons slot="end">
       <ion-icon name="close-outline" slot="icon-only" (click)="onDismiss()" class="text-white"></ion-icon>
     </ion-buttons>
   </ion-toolbar>
 </ion-header>
 <ion-content>
-  <ion-grid>
+  <ion-grid class="gradient" style="height: 100%;">
     <ion-row>
       <ion-col size-sm="8" offset-sm="2">
 
@@ -32,7 +32,10 @@
         </div>
         <div>{{user.mobile}}</div>
       </div>
-
+      <ion-button shape="round" color="danger" (click)="onDelete()">Delete</ion-button>
+      <div class="alert alert-danger mt-2 text-center" role="alert" *ngIf="isUserDeleted">
+        {{isUserDeleted}}
+      </div>
       <hr>
       <strong class="mx-2">Payment Information</strong>
 

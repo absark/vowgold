@@ -32,7 +32,6 @@ export class AppComponent implements OnInit {
       this.statusBar.styleDefault();
       this.splashScreen.hide();
       this.auth.authenticationState.subscribe(state => {
-        console.log("state",state);
         if(state){
           this.stripe.paymentDetails(this.auth.user.id).subscribe(res =>{
             if(res.payments.length!== 0 || this.auth.userRole === 'admin'){
@@ -43,7 +42,7 @@ export class AppComponent implements OnInit {
           })
           
         }else{
-          this.router.navigate(['/','auth','signup']);
+          this.router.navigate(['/','auth','signin']);
         }
       })
     });

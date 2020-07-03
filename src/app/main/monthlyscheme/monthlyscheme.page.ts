@@ -1,4 +1,10 @@
 import { Component, OnInit } from '@angular/core';
+import { AuthService } from 'src/app/services/auth.service';
+import { StripeService } from '../services/stripe.service';
+import { environment } from 'src/environments/environment';
+import { HttpClient } from '@angular/common/http';
+import { SharedService } from '../services/shared.service';
+import { LoadingController } from '@ionic/angular';
 
 @Component({
   selector: 'app-monthlyscheme',
@@ -6,32 +12,37 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./monthlyscheme.page.scss'],
 })
 export class MonthlyschemePage implements OnInit {
-   toggle1 = true;
-   toggle2 = true;
-   toggle3 = true;
-   toggle4 = true;
-   toggle5 = true;
-
-  constructor() { }
+   url = environment.url;
+   result = 0;
+   rates;
+   gold;
+   silver;
+  constructor(
+    private auth:AuthService,
+    private stripe: StripeService,
+    private loading:LoadingController,
+    private service:SharedService
+  ) { }
 
   ngOnInit() {
-  }
-  onToggle(status){
-   if(status === '12'){
-    this.toggle1 = !this.toggle1;
-   }
-   if(status === '24'){
-    this.toggle2 = !this.toggle2;
-   }
-   if(status === '36'){
-    this.toggle3 = !this.toggle3;
-   }
-   if(status === '48'){
-    this.toggle4 = !this.toggle4;
-   }
-   if(status === '60'){
-    this.toggle5 = !this.toggle5;
-   }
+    this.loading.create({
+      message:'Loading...'
+    }).then(el=>{el.present()});
+    this.rates = this.service.metalRates;
+    this.stripe.paymentDetails(this.auth.user.id).subscribe(res =>{
+      this.loading.dismiss();
+      res.payments.forEach(el =>this.result += el.amount);
+      this.gold = (this.result/this.rates[0].gold).toFixed(3);
+      this.silver = (this.result/this.rates[0].silver).toFixed(3);
+    },
+    err=>{
+      this.loading.dismiss();
+      this.auth.showAlert(err.error.message);
+    });
+  
+  
 
-  }
+  
+}
+
 }

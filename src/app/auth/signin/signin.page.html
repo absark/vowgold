@@ -1,7 +1,7 @@
 
-<ion-content>
+<ion-content >
   
-  <ion-grid>
+  <ion-grid class="gradient" style="height:100vh">
     <ion-row>
       <ion-col size-sm="10" offset-sm="1">
      <!-- LOGO -->
@@ -10,7 +10,7 @@
   </div>
 
   <!-- FORM START -->
-  <form  class="ion-padding-horizontal pt-5" (ngSubmit)="onSubmit(f)" #f='ngForm' autocomplete="off">
+  <form  class="ion-padding-horizontal pt-5"  (ngSubmit)="onSubmit(f)" #f='ngForm' autocomplete="off">
     <div class="d-flex column">
       
       <div class="mb-2">
@@ -22,15 +22,20 @@
    
       </div>
     <!-- SIGNIN BUTTON -->
-    <ion-button expand="block mt-2" type="submit">SIGN IN</ion-button>
+    <button type="submit" class="btn btn-block btn-primary mt-2">SING IN</button>
 
   </form>
  
    <!-- FORM END -->
-   <div class="text-center mt-4 anchor" [routerLink]="['/','auth','forgotpassword']">Forgot Password ?</div>
-   <div class="footer">
+   <div class="text-center mt-4 text-white" [routerLink]="['/','auth','forgotpassword']">Forgot Password ?</div>
+   <div class="footer text-center">
     <span> Don't have an Account?</span><br>
-    <span class="anchor"[routerLink]="['/','auth','signup']">Create New Account</span>
+    <div class="d-flex text-white" 
+    style="justify-content: center; outline: none;"
+    [routerLink]="['/','auth','signup']">
+      <span>Create New Account</span>
+      <ion-icon name="arrow-forward-outline" class="pt-1 icon-only"></ion-icon>
+    </div>
    </div>
       </ion-col>
     </ion-row>

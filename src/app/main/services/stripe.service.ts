@@ -29,7 +29,7 @@ export class StripeService {
         return this.http.post(`${this.url}/api/v1/stripe/payment-info`,data) ;
       }
       paymentDetails(user){
-        return this.http.get<{status:string,payments:string}>(`${this.url}/api/v1/stripe/payment-details/${user}`);
+        return this.http.get<{status:string,payments:any}>(`${this.url}/api/v1/stripe/payment-details/${user}`);
       }
 
       showAlert(msg) {

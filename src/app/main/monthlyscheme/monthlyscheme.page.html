@@ -1,125 +1,28 @@
 <ion-header>
   <ion-toolbar>
     <ion-buttons slot="start">
-      <ion-back-button defaultHref="/main/tabs/home"></ion-back-button>
+      <ion-back-button defaultHref="/main/tabs/home" class="text-white"></ion-back-button>
     </ion-buttons>
-    <ion-title>Monthly Scheme</ion-title>
+    <ion-title>My Wallet</ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content>
-  <ion-title class="my-3">Choose Your Monthly Plan</ion-title>
-  <div class="accordion mb-1 mx-1" id="accordionExample">
-    <div class="card">
-      <div  id="headingOne">
-        <h2 class="mb-0">
-          <div class="btn btn-txt"  data-toggle="collapse" (click)="onToggle('12')" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
-            <ion-icon name="add-circle-outline" slot="only-icon" *ngIf="toggle1"></ion-icon>
-            <ion-icon name="remove-circle-outline" *ngIf="!toggle1"></ion-icon>
-            <ion-label>12 months plan</ion-label>
-          </div>
-        </h2>
-      </div>
-  
-      <div id="collapseOne" class="collapse " aria-labelledby="headingOne" data-parent="#accordionExample">
-        <div class="card-body">
-         <p>* If you will choose this plan then you will get 5% BONUS after 12 months.</p>
-         <p>* You can also take gold instead of money.</p>
-        </div>
-      </div>
-    </div>
-    </div>
-    <div class="accordion mb-1 mx-1" id="accordionExample">
-      <div class="card">
-        <div  id="headingOne">
-          <h2 class="mb-0">
-            <div class="btn btn-txt"  data-toggle="collapse" (click)="onToggle('24')" data-target="#collapseTwo" aria-expanded="true" aria-controls="collapseOne">
-              <ion-icon name="add-circle-outline" slot="only-icon" *ngIf="toggle2"></ion-icon>
-              <ion-icon name="remove-circle-outline" *ngIf="!toggle2"></ion-icon>
-              <ion-label>24 months plan</ion-label>
-            </div>
-          </h2>
-        </div>
-    
-        <div id="collapseTwo" class="collapse " aria-labelledby="headingOne" data-parent="#accordionExample">
-          <div class="card-body">
-            <p>* If you will choose this plan then you will get 10% BONUS after 24 months.</p>
-            <p>* You can also take gold instead of money.</p>
-          </div>
-        </div>
-      </div>
-      </div>
-      <div class="accordion mb-1 mx-1" id="accordionExample">
-        <div class="card">
-          <div  id="headingOne">
-            <h2 class="mb-0">
-              <div class="btn btn-txt"  data-toggle="collapse" (click)="onToggle('36')" data-target="#collapseThree" aria-expanded="true" aria-controls="collapseOne">
-                <ion-icon name="add-circle-outline" slot="only-icon" *ngIf="toggle3"></ion-icon>
-                <ion-icon name="remove-circle-outline" *ngIf="!toggle3"></ion-icon>
-                <ion-label>36 months plan</ion-label>
-              </div>
-            </h2>
-          </div>
-      
-          <div id="collapseThree" class="collapse " aria-labelledby="headingOne" data-parent="#accordionExample">
-            <div class="card-body">
-              <p>* If you will choose this plan then you will get 18% BONUS after 36 months.</p>
-              <p>* You can also take gold instead of money.</p>
-            </div>
-          </div>
-        </div>
-        </div>
-        <div class="accordion mb-1 mx-1" id="accordionExample">
-          <div class="card">
-            <div  id="headingOne">
-              <h2 class="mb-0">
-                <div class="btn btn-txt"  data-toggle="collapse" (click)="onToggle('48')" data-target="#collapseFour" aria-expanded="true" aria-controls="collapseOne">
-                  <ion-icon name="add-circle-outline" slot="only-icon" *ngIf="toggle4"></ion-icon>
-                  <ion-icon name="remove-circle-outline" *ngIf="!toggle4"></ion-icon>
-                  <ion-label>48 months plan</ion-label>
-                </div>
-              </h2>
-            </div>
-        
-            <div id="collapseFour" class="collapse " aria-labelledby="headingOne" data-parent="#accordionExample">
-              <div class="card-body">
-                <p>* If you will choose this plan then you will get 25% BONUS after 48 months.</p>
-                <p>* You can also take gold instead of money.</p>
-              </div>
-            </div>
-          </div>
-          </div>
-          <div class="accordion mb-1 mx-1" id="accordionExample">
-            <div class="card">
-              <div  id="headingOne">
-                <h2 class="mb-0">
-                  <div class="btn btn-txt"  data-toggle="collapse" (click)="onToggle('60')" data-target="#collapseFive" aria-expanded="true" aria-controls="collapseOne">
-                    <ion-icon name="add-circle-outline" slot="only-icon" *ngIf="toggle5"></ion-icon>
-                    <ion-icon name="remove-circle-outline" *ngIf="!toggle5"></ion-icon>
-                    <ion-label>60 months plan</ion-label>
-                  </div>
-                </h2>
-              </div>
-          
-              <div id="collapseFive" class="collapse " aria-labelledby="headingOne" data-parent="#accordionExample">
-                <div class="card-body">
-                  <p>* If you will choose this plan then you will get 30% BONUS after 60 months.</p>
-                  <p>* You can also take gold instead of money.</p>
-                </div>
-              </div>
-            </div>
-            </div>
-            
+  <ion-grid class="gradient" style="height: 100%;">
+    <ion-row>
+      <ion-col>
+         <div class="bg-white py-2 pl-2 mt-4" style="border-radius: 5px;">
+          Total Amount: <strong *ngIf="result !==0" class="ml-2"> {{result}}&#8377;</strong>
+         </div>
+    <div class="mt-4 mb-2">I Can Buy</div >
+     <div class="bg-white py-2 pl-2 mb-1" style="border-radius: 5px;">
+     <strong *ngIf="gold" class="ml-2"> Gold: {{gold}}gram  </strong>
+     </div>
 
-             
-            <div class="mx-2 mt-3">
-              <strong>NOTE !</strong>
-              <p>Minimum amount for investment must be Rs.1000/per month.</p>
-              <p>In case, if you quit from your  investment plan before the due of your selected plan then you will not get the BONUS.</p>
-              <p>After completion of the  your plan or if quit in between , you can either take delivery of GOLD according to  the amount in your accout or redeem the GOLD rate applicable on that day when the plan ends. </p>
-              <p>Amount invested by you in your plan is as per market risk and the company is not responsible for any loss incured due to fall in gold rates during any time of the investment plan.</p>  
-            </div>
-           
-              
-
+      <div class="bg-white py-2 pl-2" style="border-radius: 5px;">
+      <strong *ngIf="gold" class="ml-2"> Silver: {{silver}} gram </strong>
+      </div>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
 </ion-content>
