@@ -21,18 +21,21 @@
          <div class="h6 border-bottom pb-2"> 
           <ion-icon name="arrow-redo-sharp" class="text-primary mr-2" slot="icon-only"></ion-icon>Paid To Vow Golds</div>
         <div class="d-flex">
-          <div class="grow">Date Paid:</div>
+          <div class="grow">Paid Date:</div>
           <div class="grow text-right">{{d.date | date }}</div>
         </div>
         <div class="d-flex my-2">
           <div class="grow">Amount Paid:</div>
           <div class="grow text-right"> Rs.{{d.amount}}</div>
         </div>
-        <div class="d-flex">
+        <div class="d-flex mb-2">
           <div class="grow">Receipt Email:</div>
           <div class="grow text-right">{{d.email}}</div>
         </div>
-        
+        <div class="d-flex">
+          <div class="grow">Payment_id:</div>
+          <div class="grow text-right">{{d.payment_id}}</div>
+        </div>        
         
       </div>
     </ion-col>

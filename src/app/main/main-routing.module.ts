@@ -2,7 +2,6 @@ import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 
 import { MainPage } from './main.page';
-//import { AuthGuardService } from '../services/auth-guard.service';
 
 const routes: Routes = [
   {
@@ -30,12 +29,12 @@ const routes: Routes = [
         loadChildren: () => import('./monthlyscheme/monthlyscheme.module').then( m => m.MonthlyschemePageModule)
       },
       {
-        path: 'stripe',
-        loadChildren: () => import('./stripe/stripe.module').then( m => m.StripePageModule)
-      },
-      {
         path: 'update-rates',
         loadChildren: () => import('./update-rates/update-rates.module').then( m => m.UpdateRatesPageModule)
+      },
+      {
+        path: 'razorpay',
+        loadChildren: () => import('./razorpay/razorpay.module').then( m => m.RazorpayPageModule)
       }
     ]
   },

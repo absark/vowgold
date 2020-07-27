@@ -9,6 +9,7 @@ import { LoadingController } from '@ionic/angular';
 })
 export class MyaccountPage implements OnInit {
   user = null;
+
   constructor(
     private auth: AuthService,
     private loading: LoadingController,
@@ -16,7 +17,7 @@ export class MyaccountPage implements OnInit {
   ) { }
 
   ngOnInit() {}
-  
+
   ionViewWillEnter(){
     if(this.service.user){
       this.loading.create({
@@ -32,9 +33,9 @@ export class MyaccountPage implements OnInit {
       }
       )
      }
+
+    
   }
-
-
-
+   
 
 }

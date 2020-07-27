@@ -21,7 +21,7 @@
 
 
     <ion-slides pager="true" [options]="slideOpts" class="m-1" style="height: 180px; border-radius: 4px;">
-      <ion-slide class="slide-bg" (click)="onGold()">
+      <ion-slide class="slide-bg">
         <ion-img src="../assets/img/gold.png" ></ion-img>
         <span class="title">Gold 
           <span *ngIf="this.rates" class="ml-2">{{this.rates[0].gold}} &#8377;/gram</span>
@@ -49,7 +49,7 @@
   <div class="d-flex mx-1 mt-2">
     <div class="card grow mr-1 py-3 text-center d-flex bg-card text-white" routerLink="/main/tabs/passbook">
      Payment History</div>
-    <div class="card grow ml-1 py-3 px-2 text-center bg-card text-white"routerLink="/main/tabs/stripe">Make Payment</div>
+    <div class="card grow ml-1 py-3 px-2 text-center bg-card text-white"routerLink="/main/tabs/razorpay">Make Payment</div>
   </div>
   <div class="card py-5 mt-2 mx-1 text-center bg-card mb-2 text-white"[routerLink]="['/','main','tabs','monthlyscheme']">Check Out Your Wallet</div>
  </div>

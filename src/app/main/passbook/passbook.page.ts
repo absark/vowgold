@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { AuthService } from '../../services/auth.service';
-import { StripeService } from '../services/stripe.service';
 import { LoadingController } from '@ionic/angular';
+import { RazorpayService } from 'src/app/services/razorpay.service';
 
 @Component({
   selector: 'app-passbook',
@@ -11,7 +11,7 @@ import { LoadingController } from '@ionic/angular';
 export class PassbookPage implements OnInit {
   paymentHistory:any = [];
   constructor(
-    private stripe: StripeService,
+    private razorpay: RazorpayService,
     private loading:LoadingController,
     private auth: AuthService
     ) {
@@ -24,7 +24,7 @@ export class PassbookPage implements OnInit {
     this.loading.create({
       message:'Loading...'
     }).then(el=> el.present());
-    this.stripe.paymentDetails(this.auth.user.id).subscribe(res =>{
+    this.razorpay.paymentDetails(this.auth.user.id).subscribe(res =>{
       this.loading.dismiss();
      this.paymentHistory = res;
     },

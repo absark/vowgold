@@ -1,9 +1,9 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { ModalController, LoadingController, AlertController } from '@ionic/angular';
-import { StripeService } from 'src/app/main/services/stripe.service';
 import { SharedService } from '../../services/shared.service';
 import { AuthService } from 'src/app/services/auth.service';
 import { Router } from '@angular/router';
+import { RazorpayService } from 'src/app/services/razorpay.service';
 
 @Component({
   selector: 'app-user',
@@ -16,7 +16,7 @@ export class UserComponent implements OnInit {
   isUserDeleted;
   constructor(
     private modal:ModalController,
-    private stripe:StripeService,
+    private razorpay:RazorpayService,
     private loading:LoadingController,
     private service:SharedService,
     private auth:AuthService,
@@ -29,14 +29,14 @@ export class UserComponent implements OnInit {
       message:'Loading...'
     }).then(el=> el.present());
 
-    this.stripe.paymentDetails(this.user._id).subscribe(res =>{
+    this.razorpay.paymentDetails(this.user._id).subscribe(res =>{
       this.loading.dismiss();
       console.log(this.user,"Payment",res.payments);
      this.paymentInfo = res.payments;
     },
     err=>{
       this.loading.dismiss();
-     this.stripe.showAlert(err.error.message);
+     this.auth.showAlert(err.error.message);
     }
     )
   }

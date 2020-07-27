@@ -1,0 +1,30 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-menu-button slot="start"></ion-menu-button>
+    <ion-title>requests</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+<ion-grid>
+  <ion-row>
+    <ion-col size-sm="8" offset-sm="2">
+      <ion-title class="border-bottom pb-2">Requests for distributor</ion-title>
+      <ion-item *ngFor="let d of distributorRequests" class="list ">
+        <ion-label slot="start" class="ion-text-wrap text-white">
+         {{d.name}}
+        </ion-label>
+        <div slot="end">
+        <ion-icon name="checkmark-circle-outline" class="text-success mr-2" (click)="onAcceptReq()"></ion-icon>
+        <ion-icon name="close-circle-outline" class="text-danger"(click)="onCancelReq()"></ion-icon>
+        </div>
+      </ion-item>
+      <div *ngIf="distributorRequests.length === 0" class="text-center mt-4">
+        No data !
+      </div>
+    </ion-col>
+  </ion-row>
+</ion-grid>
+  
+
+</ion-content>

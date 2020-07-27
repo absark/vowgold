@@ -72,4 +72,6 @@ export class SettingPage implements OnInit {
       modal.present();
     })
   }
+
+  
 }

@@ -5,7 +5,6 @@ import { JwtHelperService } from '@auth0/angular-jwt';
 import { Storage } from '@ionic/storage';
 import { environment } from '../../environments/environment';
 import { BehaviorSubject } from 'rxjs';
-import { StripeService } from '../main/services/stripe.service';
 import { Router } from '@angular/router';
 
 
@@ -29,7 +28,6 @@ export class AuthService {
     private storage: Storage,
     private alertController: AlertController, 
     private loading:LoadingController,
-    private stripe:StripeService,
     private router:Router
     ) {
   this.storage.get(USER_ROLE).then(user =>{
@@ -49,6 +47,7 @@ export class AuthService {
         let decoded = this.helper.decodeToken(token);
         let isExpired = this.helper.isTokenExpired(token);
         if (!isExpired) {
+          console.log(decoded);
           this.user = decoded;
           this.authenticationState.next(true);
         } else {

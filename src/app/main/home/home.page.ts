@@ -31,7 +31,9 @@ export class HomePage implements OnInit {
      });
   }
 
-  ngOnInit() {
+  ngOnInit() {}
+
+  ionViewWillEnter(){
     this.http.get<any>(`${this.url}/api/v1/users/rates`).subscribe(res=>{
       this.rates = res.rates;
    },
@@ -39,6 +41,8 @@ export class HomePage implements OnInit {
      this.auth.showAlert(err.error.message);
    });
   }
+
+  
   slideOpts = {
     initialSlide: 0,
     speed: 400,

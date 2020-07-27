@@ -2,7 +2,6 @@ import { Component, OnInit} from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MustMatch } from '../../services/helper';
 import { AuthService } from 'src/app/services/auth.service';
-import { RxwebValidators } from '@rxweb/reactive-form-validators';
 import { Storage } from '@ionic/storage';
 import { HttpClient } from '@angular/common/http';
 import { LoadingController } from '@ionic/angular';
@@ -85,7 +84,7 @@ export class SignUpPage implements OnInit {
         this.registerForm.reset();
       },err=>{
         this.loading.dismiss();
-        this.auth.showAlert(err.error.message);
+        this.auth.showAlert(err);
         throw new Error(JSON.stringify(err));
         
       });

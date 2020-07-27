@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { AuthService } from '../services/auth.service';
-import { StripeService } from './services/stripe.service';
 
 @Component({
   selector: 'app-main',
@@ -11,8 +10,7 @@ export class MainPage implements OnInit {
   role;
 
   constructor(
-    private auth: AuthService,
-    private stripe: StripeService
+    private auth: AuthService
   ) {
      this.role = this.auth.userRole;
     

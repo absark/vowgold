@@ -18,6 +18,13 @@
            </ion-item>
         </ion-menu-toggle>
 
+        <!-- <ion-menu-toggle *ngIf="role === 'distributor' ">
+          <ion-item routerLink="/main/tabs/members" class=" list">
+            <ion-icon name="people-outline" slot="start" class="text-white"></ion-icon>
+            <ion-label>Your Members</ion-label>
+           </ion-item>
+        </ion-menu-toggle> -->
+
         <ion-menu-toggle *ngIf="role === 'admin'">
           <ion-item routerLink="/main/tabs/home" class=" list">
             <ion-icon name="tv-outline" slot="start" class="text-white"></ion-icon>
@@ -31,6 +38,7 @@
             <ion-label> Update Rates</ion-label>
            </ion-item>
         </ion-menu-toggle>
+     
   
         <ion-menu-toggle>
           <ion-item routerLink="/main/tabs/setting" class="list">

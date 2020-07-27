@@ -34,7 +34,6 @@ console.log("From Interceptor!",this.token);
 
   intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
    let token = this.auth.getToken();
-console.log("after",token);
     //Authentication by setting header with token value
     if (token) {
       request = request.clone({

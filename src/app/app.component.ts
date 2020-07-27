@@ -5,8 +5,7 @@ import { SplashScreen } from '@ionic-native/splash-screen/ngx';
 import { StatusBar } from '@ionic-native/status-bar/ngx';
 import { AuthService } from './services/auth.service';
 import { Router } from '@angular/router';
-import { StripeService } from './main/services/stripe.service';
-import { User } from './models/user';
+import { RazorpayService } from './services/razorpay.service';
 
 @Component({
   selector: 'app-root',
@@ -21,7 +20,7 @@ export class AppComponent implements OnInit {
     private statusBar: StatusBar,
     private auth: AuthService,
     private router: Router,
-    private stripe: StripeService
+    private razorpay: RazorpayService
   ) {
     this.initializeApp();
  
@@ -33,13 +32,14 @@ export class AppComponent implements OnInit {
       this.splashScreen.hide();
       this.auth.authenticationState.subscribe(state => {
         if(state){
-          this.stripe.paymentDetails(this.auth.user.id).subscribe(res =>{
+          this.razorpay.paymentDetails(this.auth.user.id).subscribe(res =>{
             if(res.payments.length!== 0 || this.auth.userRole === 'admin'){
               this.router.navigate(['/','main']);  
             }else{
-              this.router.navigate(['/','main','tabs','stripe']);  
+              this.router.navigate(['/','main','tabs','razorpay']);  
             }
           })
+       
           
         }else{
           this.router.navigate(['/','auth','signin']);
