@@ -38,7 +38,8 @@ export class AppComponent implements OnInit {
             }else{
               this.router.navigate(['/','main','tabs','razorpay']);  
             }
-          })
+          },
+          err => this.auth.showAlert('Could not connect to the server!'))
        
           
         }else{

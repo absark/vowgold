@@ -4,7 +4,6 @@ import { Validators, FormBuilder, FormGroup } from '@angular/forms';
 import { AuthService } from 'src/app/services/auth.service';
 import { SharedService } from '../../services/shared.service';
 import { environment } from 'src/environments/environment';
-import { LoadingController } from '@ionic/angular';
 @Component({
   selector: 'app-update-user',
   templateUrl: './update-user.component.html'
@@ -26,8 +25,8 @@ export class UpdateUserComponent implements OnInit {
     private modal:ModalController,
     private formBuilder: FormBuilder,
     private auth: AuthService,
-    private service: SharedService,
-    private loading:LoadingController
+    private service: SharedService
+
     ) { }
 
   ngOnInit() {
@@ -43,13 +42,7 @@ export class UpdateUserComponent implements OnInit {
   }
   onSubmit(form:FormGroup){
     this.submitted = true;
-    this.loading.create({
-      message:'Loading...'
-    }).then(el=>{el.present()});
-    if (this.updateUser.invalid) {
-      this.loading.dismiss();
-      return;
-    };
+    if (this.updateUser.invalid) return;
     const userData = new FormData();
     if(typeof(this.updateUser.get('panCard').value) === 'object' || typeof(this.updateUser.get('adhaar').value)==='object'){
     userData.append("name",this.updateUser.value.name);
@@ -62,21 +55,17 @@ export class UpdateUserComponent implements OnInit {
     userData.append("adhaar", this.updateUser.value.adhaar);
     this.service.updateUser(userData)
       .subscribe(res=>{
-      this.loading.dismiss();
       this.modal.dismiss(res.user);
       },
       err=>{
-        this.loading.dismiss();
         this.auth.showAlert(err.error.message);
       });
     } else{
       this.service.updateUser(this.updateUser.value)
       .subscribe(res=>{
-      this.loading.dismiss();
       this.modal.dismiss(res.user);
       },
       err=>{
-        this.loading.dismiss();
         this.auth.showAlert(err.error.message);
       });
     }
