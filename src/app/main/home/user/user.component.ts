@@ -31,7 +31,6 @@ export class UserComponent implements OnInit {
 
     this.razorpay.paymentDetails(this.user._id).subscribe(res =>{
       this.loading.dismiss();
-      console.log(this.user,"Payment",res.payments);
      this.paymentInfo = res.payments;
     },
     err=>{
@@ -53,10 +52,7 @@ export class UserComponent implements OnInit {
         {
           text: 'Cancel',
           role: 'cancel',
-          cssClass: 'secondary',
-          handler: (blah) => {
-            console.log('Confirm Cancel: blah');
-          }
+          cssClass: 'secondary'
         }, {
           text: 'Yes',
           handler: () => {
@@ -67,7 +63,6 @@ export class UserComponent implements OnInit {
          err=>{
            this.auth.showAlert(err.error.message);
          });
-            console.log('Confirm Okay');
             
           }
         }

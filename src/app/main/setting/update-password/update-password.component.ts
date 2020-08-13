@@ -36,7 +36,6 @@ export class UpdatePasswordComponent implements OnInit {
   }
  async onSubmit(form:FormGroup){
     this.submitted = true;
-   console.log(this.updatePassword.value);
     // stop here if form is invalid
     if (this.updatePassword.invalid) {
         return;

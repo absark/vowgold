@@ -24,7 +24,7 @@ export class SharedService {
       this.metalRates = res.rates;
    },
    err=>{
-     this.auth.showAlert(err.message);
+     this.auth.showAlert(err.error.message);
    });
   }
 
@@ -51,20 +51,5 @@ updateRates(data){
 deleteUser(){
   return this.http.delete<{status:string,message:any}>(`${this.url}/api/v1/users/${this.auth.user.id}`);
 }
-// distributorReq(data){
-//   return this.http.post<any>(`${this.url}/api/v1/distributor/request`,data);
-// }
-// getDistributor(){
-//   return this.http.get<any>(`${this.url}/api/v1/distributor/${this.auth.user.id}`);
-// }
 
-// getDistributors(){
-//   return this.http.get<any>(`${this.url}/api/v1/distributor/distributors`);
-// }
-// assignAsDistributor(){
-//     return this.http.patch<any>(`${this.url}/api/v1/distributor/${this.auth.user.id}`,'');
-// }
-// discardReq(){
-//   return this.http.delete<any>(`${this.url}/api/v1/distributor/${this.auth.user.id}`);
-// }
 }

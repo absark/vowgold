@@ -1,4 +1,4 @@
-import { Component, OnInit} from '@angular/core';
+import { Component, OnInit, ViewChild} from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MustMatch } from '../../services/helper';
 import { AuthService } from 'src/app/services/auth.service';
@@ -6,6 +6,7 @@ import { Storage } from '@ionic/storage';
 import { HttpClient } from '@angular/common/http';
 import { LoadingController } from '@ionic/angular';
 import { JwtHelperService } from '@auth0/angular-jwt';
+import { single } from 'rxjs/operators';
 const TOKEN_KEY = 'access_token';
 const USER_ROLE = 'access_role';
 @Component({
@@ -15,6 +16,8 @@ const USER_ROLE = 'access_role';
 })
 
 export class SignUpPage implements OnInit {
+  @ViewChild('radio',{static:true}) maritalStatus;
+  @ViewChild('gender',{static:true}) gender;
    registerForm:FormGroup;
    submitted = false;
    selectedFile: any;
@@ -39,7 +42,9 @@ export class SignUpPage implements OnInit {
       passwordConfirm:['',[Validators.required]],
       address:['',[Validators.required]],
       panCard:['',[Validators.required]],
-      adhaar:['',[Validators.required]]
+      adhaar:['',[Validators.required]],
+      dob:['',[Validators.required]],
+      anniversary:['']
     },
     {
       validator: MustMatch('password', 'confirmPassword')
@@ -64,10 +69,15 @@ export class SignUpPage implements OnInit {
     userData.append("address", this.registerForm.value.address);
     userData.append("panCard", this.registerForm.value.panCard);
     userData.append("adhaar", this.registerForm.value.adhaar);
+    userData.append("dob", this.registerForm.value.dob);
+    userData.append("anniversary", this.registerForm.value.anniversary);
+    userData.append("maritalStatus", this.maritalStatus.value);
+    userData.append("gender", this.gender.value);
+    
 
     // stop here if form is invalid
     if (this.registerForm.invalid) {
-      this.loading.dismiss();
+        this.loading.dismiss();
         return;
     }
  
@@ -81,10 +91,14 @@ export class SignUpPage implements OnInit {
         this.auth.authenticationState.next(true);
         this.adhaarcard = null;
         this.pancard = null;
-        this.registerForm.reset();
+        this.maritalStatus = 'single';
+        this.gender='female';
+        setTimeout(()=>{
+          this.registerForm.reset();
+        },1500);
       },err=>{
         this.loading.dismiss();
-        this.auth.showAlert(err);
+        this.auth.showAlert(err.error.message);
         throw new Error(JSON.stringify(err));
         
       });

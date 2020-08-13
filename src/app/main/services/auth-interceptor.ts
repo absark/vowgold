@@ -20,14 +20,8 @@ export class ConfigInterceptor implements HttpInterceptor {
   token;
   mySubscription: any;
   constructor(
-    private storage:Storage,
-    private platform:Platform,
-    private router:Router,
     private auth: AuthService
-    ) { 
-   
-console.log("From Interceptor!",this.token);
-  }
+    ) { }
 
 
 
@@ -43,22 +37,9 @@ console.log("From Interceptor!",this.token);
       });
     }
 
-    // if (!request.headers.has('Content-Type')) {
-    //   request = request.clone({
-    //     setHeaders: {
-    //       'content-type': 'application/json'
-    //     }
-    //   });
-    // }
-
-    // request = request.clone({
-    //   headers: request.headers.set('Accept', 'application/json')
-    // });
-
     return next.handle(request).pipe(
       map((event: HttpEvent<any>) => {
         if (event instanceof HttpResponse) {
-          console.log('event--->>>');
         }
         return event;
       }),

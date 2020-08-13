@@ -15,7 +15,7 @@
 
       <div class="mb-2">
         <input type="text" 
-        placeholder="User Name" 
+        placeholder="User Name *" 
         class="form-control" 
         formControlName="name"
         [ngClass]="{ 'is-invalid': submitted && registerForm.get('name').errors }" 
@@ -30,7 +30,7 @@
      
       <div class="mb-2">
         <input type="text"
-         placeholder="Email Address " 
+         placeholder="Email Address *" 
          class="form-control"  
          formControlName="email"
          [ngClass]="{ 'is-invalid': submitted && registerForm.get('email').errors }" 
@@ -53,7 +53,7 @@
 
       <div class="mb-2">
         <input type="number"
-         placeholder="Mobile"
+         placeholder="Mobile *"
          class="form-control" 
          formControlName="mobile"
          [ngClass]="{ 'is-invalid': submitted && registerForm.get('mobile').errors }" 
@@ -75,7 +75,7 @@
 
       <div class="mb-2">
         <input type="password"
-         placeholder="Password"
+         placeholder="Password *"
          class="form-control" 
          formControlName="password"
          [ngClass]="{ 'is-invalid': submitted && registerForm.get('password').errors }" 
@@ -97,7 +97,7 @@
 
       <div class="mb-2">
         <input type="password"
-         placeholder="Confirm Password"
+         placeholder="Confirm Password *"
          class="form-control" 
          formControlName="passwordConfirm"
          [ngClass]="{ 'is-invalid': submitted && registerForm.get('passwordConfirm').errors }" 
@@ -121,7 +121,7 @@
         type="text"
         formControlName="address"
         [ngClass]="{ 'is-invalid': submitted && registerForm.get('address').errors }" 
-         placeholder="Address"
+         placeholder="Address *"
          class="form-control">
         </textarea>
         <div
@@ -134,10 +134,33 @@
       
       </div>
       </div>
-
-
+      <div class="mb-2 bg-white" style="border-radius: 4px;">
+        <ion-datetime displayFormat="MMM DD YYYY" placeholder="DOB *" formControlName="dob"></ion-datetime>
+      </div>
+      <div class="mb-2 bg-white p-2" style="border-radius: 4px;">
+        <ion-radio-group value="single" #radio>
+            <ion-radio slot="start" value="single"></ion-radio>
+            <ion-label class="mr-2">Single</ion-label>
+            <ion-radio slot="start" value="married"></ion-radio>
+            <ion-label>Married</ion-label>
+          </ion-radio-group>
+      </div>
+      <div class="mb-2 bg-white" style="border-radius: 4px;" *ngIf="maritalStatus.value=='married'">
+        <ion-datetime displayFormat="MMM DD YYYY" placeholder="Anniversary Date (optional)" formControlName="anniversary"></ion-datetime>
+      </div>
+      <div class="mb-2 bg-white p-2" style="border-radius: 4px;">
+        <ion-radio-group value="female" #gender>
+            <ion-radio slot="start" value="female"></ion-radio>
+            <ion-label class="mr-2">Female</ion-label>
+            <ion-radio slot="start" value="male"></ion-radio>
+            <ion-label class="mr-2">Male</ion-label>
+            <ion-radio slot="start" value="other"></ion-radio>
+            <ion-label>Other</ion-label>
+          </ion-radio-group>
+      </div>
+     
       <ion-item lines="none" class="mb-2 file">
-        <ion-label slot="start" class="ion-text-wrap text">Select PAN Card</ion-label >
+        <ion-label slot="start" class="ion-text-wrap text">Select PAN Card *</ion-label >
           <input
           style="display: none"[writeFile]="true"
           type="file" (change)="onFileChanged($event)"
@@ -150,7 +173,7 @@
 
 
       <ion-item lines="none" class="mb-3 file">
-        <ion-label slot="start" class="text">Select Adhaar Card</ion-label >
+        <ion-label slot="start" class="text">Select Adhaar Card *</ion-label >
         <input
         style="display: none"[writeFile]="true"
         type="file" (change)="onAdhaar($event)"
@@ -163,7 +186,7 @@
   
 
       <!-- SIGNUP BUTTON -->
-      <button type="submit" class="btn btn-block btn-primary">Create New Account</button>
+      <button type="submit" class="btn btn-block btn-primary">Create New Account </button>
   
     </div>
 
