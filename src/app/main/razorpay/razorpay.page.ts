@@ -13,17 +13,24 @@ import { PaymentComponent } from './payment/payment.component';
   styleUrls: ['./razorpay.page.scss'],
 })
 export class RazorpayPage implements OnInit {
+  paymentDetails:any=[];
   payment:FormGroup;
   email:string;
   phone:number;
   error:string;
+  dayOfMonth ;
+  noOfplan:number;
   constructor(
     private formBuilder: FormBuilder,
     private service:SharedService,
     private loading:LoadingController,
     private auth:AuthService,
-    private modal:ModalController
-    ) { }
+    private modal:ModalController,
+    private razorpay:RazorpayService,
+    private router:Router
+    ) { 
+    
+    }
  
   ngOnInit() {
     this.payment = this.formBuilder.group({
@@ -41,9 +48,20 @@ export class RazorpayPage implements OnInit {
 
    if(this.service.user){
     this.service.getUser().subscribe(res => {
-      this.loading.dismiss();
+      // Get payment Details
+      this.razorpay.paymentDetails1(this.auth.user.id,res.user.plans).subscribe(res =>{
+        this.loading.dismiss();
+        this.paymentDetails.push(...res.payments);
+        this.checkOutDays(this.paymentDetails[this.paymentDetails.length - 1].date)
+       },
+       error=>{
+        this.loading.dismiss();
+         this.auth.showAlert(error.error.message);
+       }
+       );
       this.email = res.user.email;
       this.phone = res.user.mobile;
+      this.noOfplan = res.user.plans;
       this.ngOnInit();
     },
     err=>{
@@ -69,7 +87,8 @@ export class RazorpayPage implements OnInit {
       component:PaymentComponent,
       componentProps:{
        paymentInfo:this.payment.value,
-       phone:this.phone
+       phone:this.phone,
+       planNo:this.noOfplan
       }
     }).then(el=>{
       el.present();
@@ -78,5 +97,31 @@ export class RazorpayPage implements OnInit {
    
   }
 
- 
+  // calculate the day from the last payment
+  checkOutDays(date){
+     let currentdate = new Date().getTime();
+     let difference = Math.trunc((currentdate - new Date(date).getTime())/(1000*3600*24));
+     this.dayOfMonth = +difference;
+  }
+
+
+  // After payment disabled the payment button for next 28 days
+  ondisable(){
+    if(this.dayOfMonth < 28){
+      return true
+    }
+  }
+
+  //for starting new plan
+  onStartNewPlan(){
+    const planNo = +this.paymentDetails[this.paymentDetails.length - 1].planNo+1;
+    this.service.updatePlan({plans:planNo})
+    .subscribe(res=>{
+      this.router.navigate(['/','main','tabs','home']);
+    },
+    err=>{
+      this.auth.showAlert(err.error.message);
+    });
+
+}
 }

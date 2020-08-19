@@ -13,6 +13,7 @@ import { SharedService } from '../../services/shared.service';
 export class PaymentComponent implements OnInit {
 @Input() paymentInfo:{email:string,amount:number};
 @Input() phone:number;
+@Input() planNo:number;
 windowRef:any;
 gstAmount= 100;
   constructor(
@@ -44,7 +45,8 @@ gstAmount= 100;
           date:res.data.date,
           email:this.paymentInfo.email,
           user_id:this.auth.user.id,
-          goldrate:this.service.metalRates[0].gold
+          goldrate:this.service.metalRates[0].gold,
+          planNo:this.planNo
           }).subscribe(res =>{
             this.router.navigate(['/','main','tabs','home'])
             setTimeout(()=>{this.modal.dismiss();},600);

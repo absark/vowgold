@@ -8,7 +8,7 @@ export class SharedService {
   url = environment.url;
   user = null;
   metalRates;
-
+  plan = null;
   constructor(
     private http:HttpClient,
     private auth:AuthService,
@@ -29,7 +29,12 @@ export class SharedService {
   }
 
   updateUser(body){
+    console.log("hh",body);
     return this.http.patch<{status:string,user:any}>(`${this.url}/api/v1/users/${this.auth.user.id}`,body);
+  }
+ 
+    updatePlan(body){
+    return this.http.patch<any>(`${this.url}/api/v1/users/newplan/${this.auth.user.id}`,body);
   }
 
   getUser(){

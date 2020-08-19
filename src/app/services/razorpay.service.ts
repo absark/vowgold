@@ -23,6 +23,10 @@ export class RazorpayService {
    paymentDetails(user){
     return this.http.get<{status:string,payments:any}>(`${this.url}/api/v1/razorpay/payment-details/${user}`);
   }
+  paymentDetails1(user,planNo = 1){
+    console.log("details",planNo);
+   return this.http.get<{status:string,payments:any}>(`${this.url}/api/v1/razorpay/payment-details/${user}/${planNo}`);
+ }
   payment(data){
     return this.http.post<any>(`${this.url}/api/v1/razorpay/payment`,data) ;
   }

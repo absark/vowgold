@@ -9,8 +9,24 @@
 
 <ion-content>
 <ion-grid class="gradient" style="height: 100%; padding-top: 25%;">
-  <ion-row>
+
+  <ion-row *ngIf="paymentDetails.length===11">
     <ion-col size-sm="8" offset-sm="2">
+      <ion-title class="text-white mx-2 mb-2">Your plan has completed</ion-title>
+      <ion-button (click)="onStartNewPlan()" expand="block">
+        Start new plan
+      </ion-button>
+    </ion-col>
+  </ion-row>
+
+  <ion-row *ngIf="11>paymentDetails.length ">
+    <ion-col size-sm="8" offset-sm="2">
+      <div class="my-2" *ngIf="27>=dayOfMonth">
+        <span class="text-white mx-2">You will have to pay after {{28-dayOfMonth}} days</span>
+      </div>
+      <div class="my-2" *ngIf="dayOfMonth>27">
+        <span class="text-danger mx-2">Please pay your next installment !</span>
+      </div>
       <form class="mx-2 mt-5" [formGroup]="payment" (ngSubmit)="onSubmit(payment)">
         <div class="mb-1">
           <input type="email" placeholder="Email" class="form-control"  formControlName="email">
@@ -19,7 +35,7 @@
           <input type="number" placeholder="Amount" class="form-control" #amount formControlName="amount">
           
         </div>
-        <ion-button type="submit" expand="block" [disabled]="payment.invalid ">Pay</ion-button>
+        <ion-button type="submit" expand="block" [disabled]="payment.invalid ||ondisable()">Pay</ion-button>
         <div class="alert alert-danger" *ngIf="error">{{error}}</div>
       </form>
       
