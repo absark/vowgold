@@ -10,7 +10,7 @@
   <ion-row>
     <ion-col size-sm="8" offset-sm="2">
     
-     <div class="card px-2 py-3">
+     <div class="card px-2 py-3" *ngIf="this.Paylength === 0">
        <strong class="border-bottom pb-1">Payment Details</strong>
        <div class="d-flex my-2">
          <div class="grow">Amount</div>
@@ -18,13 +18,172 @@
        </div>
        <div class="d-flex my-2">
         <div class="grow">GST</div>
-        <div>&#8377;-{{gstAmount}}</div>
+        <div>&#8377;+{{gstAmount}}</div>
+      </div>
+      <div class="d-flex my-2">
+        <div class="grow">registration Fees</div>
+        <div>&#8377;+{{this.registerFees}}</div>
       </div>
       <div class="d-flex my-2">
         <strong class="grow">Total Amount</strong>
-        <strong>&#8377;{{paymentInfo.amount+gstAmount}}</strong>
+        <strong>&#8377;{{paymentInfo.amount+gstAmount+this.registerFees}}</strong>
       </div>
      </div>
+
+     <div class="card px-2 py-3" *ngIf="this.Paylength === 10">
+      <strong class="border-bottom pb-1">Payment Details</strong>
+      <div class="d-flex my-2">
+        <div class="grow">Amount</div>
+        <div>&#8377;{{paymentInfo.amount}}</div>
+      </div>
+      <div class="d-flex my-2">
+       <div class="grow">GST</div>
+       <div>&#8377;+{{this.gstAmount}}</div>
+     </div>
+     <div class="d-flex my-2">
+      <div class="grow">Bonus amount GST</div>
+      <div>&#8377;+{{this.bonusAmount}}</div>
+    </div>
+     <div class="d-flex my-2">
+       <strong class="grow">Total Amount</strong>
+       <strong>&#8377;{{paymentInfo.amount+gstAmount+this.bonusAmount}}</strong>
+     </div>
+    </div>
+    <div class="card px-2 py-3" *ngIf="this.Paylength === 1">
+      <strong class="border-bottom pb-1">Payment Details</strong>
+      <div class="d-flex my-2">
+        <div class="grow">Amount</div>
+        <div>&#8377;{{paymentInfo.amount}}</div>
+      </div>
+      <div class="d-flex my-2">
+       <div class="grow">GST</div>
+       <div>&#8377;+{{this.gstAmount}}</div>
+     </div>
+     <div class="d-flex my-2">
+       <strong class="grow">Total Amount</strong>
+       <strong>&#8377;{{paymentInfo.amount+this.gstAmount}}</strong>
+     </div>
+    </div>
+    <div class="card px-2 py-3" *ngIf="this.Paylength === 2">
+      <strong class="border-bottom pb-1">Payment Details</strong>
+      <div class="d-flex my-2">
+        <div class="grow">Amount</div>
+        <div>&#8377;{{paymentInfo.amount}}</div>
+      </div>
+      <div class="d-flex my-2">
+       <div class="grow">GST</div>
+       <div>&#8377;+{{this.gstAmount}}</div>
+     </div>
+     <div class="d-flex my-2">
+       <strong class="grow">Total Amount</strong>
+       <strong>&#8377;{{paymentInfo.amount+this.gstAmount}}</strong>
+     </div>
+    </div>
+    <div class="card px-2 py-3" *ngIf="this.Paylength === 3">
+      <strong class="border-bottom pb-1">Payment Details</strong>
+      <div class="d-flex my-2">
+        <div class="grow">Amount</div>
+        <div>&#8377;{{paymentInfo.amount}}</div>
+      </div>
+      <div class="d-flex my-2">
+       <div class="grow">GST</div>
+       <div>&#8377;+{{this.gstAmount}}</div>
+     </div>
+     <div class="d-flex my-2">
+       <strong class="grow">Total Amount</strong>
+       <strong>&#8377;{{paymentInfo.amount+this.gstAmount}}</strong>
+     </div>
+    </div>
+    <div class="card px-2 py-3" *ngIf="this.Paylength === 4">
+      <strong class="border-bottom pb-1">Payment Details</strong>
+      <div class="d-flex my-2">
+        <div class="grow">Amount</div>
+        <div>&#8377;{{paymentInfo.amount}}</div>
+      </div>
+      <div class="d-flex my-2">
+       <div class="grow">GST</div>
+       <div>&#8377;+{{this.gstAmount}}</div>
+     </div>
+     <div class="d-flex my-2">
+       <strong class="grow">Total Amount</strong>
+       <strong>&#8377;{{paymentInfo.amount+this.gstAmount}}</strong>
+     </div>
+    </div>
+    <div class="card px-2 py-3" *ngIf="this.Paylength === 5">
+      <strong class="border-bottom pb-1">Payment Details</strong>
+      <div class="d-flex my-2">
+        <div class="grow">Amount</div>
+        <div>&#8377;{{paymentInfo.amount}}</div>
+      </div>
+      <div class="d-flex my-2">
+       <div class="grow">GST</div>
+       <div>&#8377;+{{this.gstAmount}}</div>
+     </div>
+     <div class="d-flex my-2">
+       <strong class="grow">Total Amount</strong>
+       <strong>&#8377;{{paymentInfo.amount+this.gstAmount}}</strong>
+     </div>
+    </div>
+    <div class="card px-2 py-3" *ngIf="this.Paylength === 6">
+      <strong class="border-bottom pb-1">Payment Details</strong>
+      <div class="d-flex my-2">
+        <div class="grow">Amount</div>
+        <div>&#8377;{{paymentInfo.amount}}</div>
+      </div>
+      <div class="d-flex my-2">
+       <div class="grow">GST</div>
+       <div>&#8377;+{{this.gstAmount}}</div>
+     </div>
+     <div class="d-flex my-2">
+       <strong class="grow">Total Amount</strong>
+       <strong>&#8377;{{paymentInfo.amount+this.gstAmount}}</strong>
+     </div>
+    </div>
+    <div class="card px-2 py-3" *ngIf="this.Paylength === 7">
+      <strong class="border-bottom pb-1">Payment Details</strong>
+      <div class="d-flex my-2">
+        <div class="grow">Amount</div>
+        <div>&#8377;{{paymentInfo.amount}}</div>
+      </div>
+      <div class="d-flex my-2">
+       <div class="grow">GST</div>
+       <div>&#8377;+{{this.gstAmount}}</div>
+     </div>
+     <div class="d-flex my-2">
+       <strong class="grow">Total Amount</strong>
+       <strong>&#8377;{{paymentInfo.amount+this.gstAmount}}</strong>
+     </div>
+    </div>
+    <div class="card px-2 py-3" *ngIf="this.Paylength === 8">
+      <strong class="border-bottom pb-1">Payment Details</strong>
+      <div class="d-flex my-2">
+        <div class="grow">Amount</div>
+        <div>&#8377;{{paymentInfo.amount}}</div>
+      </div>
+      <div class="d-flex my-2">
+       <div class="grow">GST</div>
+       <div>&#8377;+{{this.gstAmount}}</div>
+     </div>
+     <div class="d-flex my-2">
+       <strong class="grow">Total Amount</strong>
+       <strong>&#8377;{{paymentInfo.amount+this.gstAmount}}</strong>
+     </div>
+    </div>
+    <div class="card px-2 py-3" *ngIf="this.Paylength === 9">
+      <strong class="border-bottom pb-1">Payment Details</strong>
+      <div class="d-flex my-2">
+        <div class="grow">Amount</div>
+        <div>&#8377;{{paymentInfo.amount}}</div>
+      </div>
+      <div class="d-flex my-2">
+       <div class="grow">GST</div>
+       <div>&#8377;+{{this.gstAmount}}</div>
+     </div>
+     <div class="d-flex my-2">
+       <strong class="grow">Total Amount</strong>
+       <strong>&#8377;{{paymentInfo.amount+this.gstAmount}}</strong>
+     </div>
+    </div>
      <ion-button expand="block" (click)="onPayment()" class="mt-2">Proceed</ion-button>
     </ion-col>
   </ion-row>

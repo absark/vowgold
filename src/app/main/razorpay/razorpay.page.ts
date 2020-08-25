@@ -49,7 +49,9 @@ export class RazorpayPage implements OnInit {
    if(this.service.user){
     this.service.getUser().subscribe(res => {
       // Get payment Details
+      console.log('user' , res);
       this.razorpay.paymentDetails1(this.auth.user.id,res.user.plans).subscribe(res =>{
+        console.log('payment Details' , res);
         this.loading.dismiss();
         this.paymentDetails.push(...res.payments);
         this.checkOutDays(this.paymentDetails[this.paymentDetails.length - 1].date)
@@ -88,7 +90,8 @@ export class RazorpayPage implements OnInit {
       componentProps:{
        paymentInfo:this.payment.value,
        phone:this.phone,
-       planNo:this.noOfplan
+       planNo:this.noOfplan,
+       Paylength: this.paymentDetails.length,
       }
     }).then(el=>{
       el.present();
