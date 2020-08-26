@@ -21,37 +21,47 @@
 
 
     <ion-slides pager="true" [options]="slideOpts" class="m-1" style="height: 180px; border-radius: 4px;">
-      <ion-slide class="slide-bg">
+
+      <ion-slide class="slide-bg" routerLink="/main/tabs/displayallrates">
         <ion-img src="../assets/img/gold.png" ></ion-img>
-        <span class="title">Gold 
-          <span *ngIf="this.rates" class="ml-2">{{this.rates[0].gold}} &#8377;/gram</span>
+        <span class="title">Gold(24K)
+          <span *ngIf="this.rates" class="ml-2">&#8377; {{this.rates[0].gold}} (10 Grams)</span>
         </span>
-  
       </ion-slide>
-      <ion-slide class="slide-bg">
+
+      <ion-slide class="slide-bg" routerLink="/main/tabs/displayallrates">
         <ion-img src="../assets/img/silver.png" ></ion-img>
         <span class="title">Silver
-          <span *ngIf="this.rates" class="ml-2">{{this.rates[0].silver}} &#8377;/gram</span>
+          <span *ngIf="this.rates" class="ml-2">&#8377; {{this.rates[0].silver}} (1 Kg)</span>
         </span>
-  
       </ion-slide>
-      <ion-slide class="slide-bg">
+
+      <ion-slide class="slide-bg" routerLink="/main/tabs/displayallrates">
         <ion-img src="../assets/img/diamond.png" ></ion-img>
         <span class="title">Diamond
-          <span *ngIf="this.rates" class="ml-2">{{this.rates[0].diamond}} &#8377;/carat</span>
+          <span *ngIf="this.rates" class="ml-2">&#8377; {{this.rates[0].diamond}} (carat)</span>
         </span>
-  
       </ion-slide>
+
     </ion-slides>
   
 
 
   <div class="d-flex mx-1 mt-2">
     <div class="card grow mr-1 py-3 text-center d-flex bg-card text-white" routerLink="/main/tabs/passbook">
-     Payment History</div>
-    <div class="card grow ml-1 py-3 px-2 text-center bg-card text-white"routerLink="/main/tabs/razorpay">Make Payment</div>
+     Payment History
+    </div>
+
+    <div class="card grow ml-1 py-3 px-2 text-center bg-card text-white"routerLink="/main/tabs/razorpay">
+      Make Payment
+    </div>
+
   </div>
-  <div class="card py-5 mt-2 mx-1 text-center bg-card mb-2 text-white"[routerLink]="['/','main','tabs','monthlyscheme']">Check Out Your Wallet</div>
+
+  <div class="card py-5 mt-2 mx-1 text-center bg-card mb-2 text-white"[routerLink]="['/','main','tabs','monthlyscheme']">
+    Check Out Your Wallet
+  </div>
+
  </div>
 
 

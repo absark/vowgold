@@ -35,7 +35,8 @@
           <input type="number" placeholder="Amount" class="form-control" #amount formControlName="amount">
           
         </div>
-        <ion-button type="submit" expand="block" [disabled]="payment.invalid ||ondisable()">Pay</ion-button>
+        <!-- <ion-button type="submit" expand="block" [disabled]="payment.invalid ||ondisable()">Pay</ion-button> -->
+        <ion-button type="submit" expand="block">Pay</ion-button>
         <div class="alert alert-danger" *ngIf="error">{{error}}</div>
       </form>
       

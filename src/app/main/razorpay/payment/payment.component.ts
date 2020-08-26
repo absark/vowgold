@@ -16,7 +16,7 @@ export class PaymentComponent implements OnInit {
 @Input() planNo:number;
 @Input() Paylength:number;
 windowRef:any;
-gstAmount;
+gstAmount: number;
 bonusAmount;
 Amount;
 totalPlanAmount;
@@ -36,25 +36,36 @@ registerFees = 100;
 
   onPayment(){
     this.razorpay.payment(this.paymentInfo).subscribe(res =>{
-      console.log('payment info' , this.paymentInfo);
-      console.log('response' , res);
-      const amount = res.data.amount /100;
-      console.log(amount);
-      this.gstAmount = amount/100 * 3;
+      const amount = this.paymentInfo.amount;
+      //calculating Gst Amount
+      this.gstAmount = (amount/100) * 3;
+      //calculating Total Plan Amount
       this.totalPlanAmount = amount * 11;
-      this.totalPlanAmountGst = this.totalPlanAmount/100 * 5;
-      this.bonusAmount = this.totalPlanAmountGst/100 * 3;
-      if(this.Paylength === 0) {
+      // calculating bonus amount for user
+      this.totalPlanAmountGst = (this.totalPlanAmount/100) * 5;
+      // calculating gst on bonus amount
+      this.bonusAmount = (this.totalPlanAmountGst/100) * 3;
 
+      if(this.Paylength === 0) {
+        // if user is paying first time
         this.Amount = amount + this.gstAmount + this.registerFees;
+        // Adding 00 to the amount by multplying by 100
+        // this is because razorpay divides the final amount by 100
+        this.Amount = (this.Amount * 100);
 
       } else if(this.Paylength === 10) {
-
+        // if user is paying last amount for the scheme
         this.Amount = amount + this.gstAmount + this.bonusAmount;
+        // Adding 00 to the amount by multplying by 100
+        // this is because razorpay divides the final amount by 100
+        this.Amount = (this.Amount * 100);
 
       } else {
-
+        // regular  payment for user
         this.Amount = amount + this.gstAmount;
+        // Adding 00 to the amount by multplying by 100
+        // this is because razorpay divides the final amount by 100
+        this.Amount = (this.Amount * 100);
 
       }
       let options={
@@ -67,7 +78,7 @@ registerFees = 100;
         "handler":(payment_id)=>{
           this.razorpay.paymentInfo({
           payment_id:payment_id.razorpay_payment_id,
-          amount:this.Amount/100,
+          amount:this.paymentInfo.amount,
           date:res.data.date,
           email:this.paymentInfo.email,
           user_id:this.auth.user.id,
@@ -88,7 +99,6 @@ registerFees = 100;
        }
       };
       console.log('options' , options);
-      debugger;
      const pay= new  this.windowRef.Razorpay(options);
       pay.open();
 

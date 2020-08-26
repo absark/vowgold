@@ -35,6 +35,10 @@ const routes: Routes = [
       {
         path: 'razorpay',
         loadChildren: () => import('./razorpay/razorpay.module').then( m => m.RazorpayPageModule)
+      },
+      {
+        path: 'displayallrates',
+        loadChildren: () => import('./displayallrates/displayallrates.module').then( m => m.DisplayallratesPageModule)
       }
     ]
   },
@@ -42,7 +46,12 @@ const routes: Routes = [
     path:'',
     redirectTo:'/main/tabs/home',
     pathMatch:'full'
+  },
+  {
+    path: 'displayallrates',
+    loadChildren: () => import('./displayallrates/displayallrates.module').then( m => m.DisplayallratesPageModule)
   }
+
 ];
 
 @NgModule({
